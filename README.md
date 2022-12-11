@@ -18,7 +18,9 @@
     + d - GPIO2(I2C data)
     + c - GPUO3(I2C clock)
     + gnd - gnd
-    
+
+- - -
+
 ![rotaryencoder](https://user-images.githubusercontent.com/81803973/206887239-9f9d04d1-1494-41a8-a2a2-4edfd9077619.png)
 * 로터리 엔코더   
     + vcc - 3.3v
@@ -26,6 +28,8 @@
     + CLK - GPIO20(GPIO.input)
     + DT - GPIO21(GPIO.input)
     + SW - GPIO23(GPIO.input)
+
+- - -
 
 ![bluetooth](https://user-images.githubusercontent.com/81803973/206887241-3f8da0dc-67ec-4dc6-91cd-7ecf883745e5.png)
 * 블루투스 - UART   
@@ -35,9 +39,13 @@
     + RXD - GPIO0(Raspberry.TXD2)
     + TXD - GPIO1(Raspberry.RXD2)
 
+- - -
+
 * 푸시 버튼   
     슬라이드 스위치가 없어 푸시 버튼으로 대체   
     버튼을 누르고 있는 중에만 켜지도록 함
+    
+- - -
 
 * LED
     + Main LED - GPIO18(GPIO.PWM_OUTPUT)
