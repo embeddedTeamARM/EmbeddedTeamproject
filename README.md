@@ -5,7 +5,7 @@
 
 [2. 사용법](#2-사용법)
 
-[3. 참고자료](#참고-자료-출처)
+[3. 참고자료](#3-참고-자료)
 
 ## 1. 사용한 모듈
 ![i2c_rtc](https://user-images.githubusercontent.com/81803973/206887230-703a8d54-430a-4678-a00d-22256a7fae08.png)
@@ -58,20 +58,20 @@
         + 다이얼로 설정하는 방식은 로터리 버튼을 클릭하여 모드를 바꿔 설정한다.   
             <pre>  case 1: 기본 조절값
                 밝기 조절
-            case 2: 1번 클릭
+            case 2: 다이얼 1번 클릭
                 시작 시각 중 시각 설정
-            case 3: 2번 클릭
+            case 3: 다이얼 2번 클릭
                 시작 시각 중 분 설정
-            case 4: 3번 클릭
+            case 4: 다이얼 3번 클릭
                 끝 시각 중 시각 설정
-            case 5: 4번 클릭
+            case 5: 다이얼 4번 클릭
                 끝 시각 중 분 설정</pre>   
            case 2~5일 경우, 시각 조절이 n초동안 일어나지 않는다면 default로 돌아간다.
 2. 
 3. 
 4. 
 
-## 참고 자료 출처
+## 3. 참고 자료
 * [74HC595 datasheet](https://www.sparkfun.com/datasheets/IC/SN74HC595.pdf)
 * [4 digit 7 segment with 74HC595](https://m.blog.naver.com/PostView.naver?isHttpsRedirect=true&blogId=pcmola&logNo=220610851580)
 * [rotary encoder click](https://learn.sunfounder.com/lesson-18-rotary-encoder/)
