@@ -92,7 +92,12 @@
 * [마크다운 만들기](https://gist.github.com/ihoneymon/652be052a0727ad59601)
 * [마크다운 목차 만들기](https://kyeoneee.tistory.com/56)
 
-## 참고
-project_makefile 폴더는 파일들을 전부 쪼갠 것
+- - -
 
-teamproject.c 파일은 project_makefile 폴더 내의 소스코드들을 한데 다 모아둔 것
+## 비고
+1. project_makefile 폴더는 파일들을 전부 쪼갠 것   
+폴더 내부에서 make 하면 컴파일
+
+
+2. teamproject.c 파일은 project_makefile 폴더 내의 소스코드들을 한데 다 모아둔 것   
+gcc -o app teamproject.c -lwiringPi -lpthread 혹은 make 하면 컴파일
