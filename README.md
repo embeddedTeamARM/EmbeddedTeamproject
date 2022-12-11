@@ -70,7 +70,7 @@
         - 설정 밝기 인디케이터 - GPIO19(GPIO.PWM_OUTPUT)
 
 ## 2. 사용법
-1. 데이터 설정
+1) 데이터 설정
     * 1.1 - 블루투스로 설정   
         + 블루투스는 다음과 같은 형태로 데이터를 받는다.   
             <pre>[code] [digit1] [digit2] [digit3] [digit4] [digit5]</pre>
@@ -83,7 +83,7 @@
             |5|10~100|-|-|-|-|밝기 설정|
             
     * 1.2 - 다이얼로 설정
-        + 다이얼로 설정하는 방식은 로터리 버튼을 클릭하여 모드를 바꿔 설정한다.   
+        + 다이얼로 설정하는 방식은 로터리 버튼을 클릭하여 모드를 바꿔 설정한다. 
             <pre>  case 1: 기본 조절값
                 밝기 조절
             case 2: 다이얼 1번 클릭
@@ -95,9 +95,17 @@
             case 5: 다이얼 4번 클릭
                 끝 시각 중 분 설정</pre>   
            case 2~5일 경우, 시각 조절이 n초동안 일어나지 않는다면 default로 돌아간다.
-2. 
-3. 
-4. 
+
+           다이얼로 설정할 경우 7segment에 설정하려는 값이 나타난다.
+2) 7-segment   
+    * 표현 식   
+        |code|설명|숫자 자릿수|
+        |-----|---|---:|
+        |Sh|시작 시각 indicater|2|
+        |Sn|시작 분 indicater|2|
+        |Eh|끝 시각 indicater|2|
+        |En|끝 분 indicater|2|
+        |b|설정 밝기 indicater|3|
 
 ## 3. 참고 자료
 * [74HC595 datasheet](https://www.sparkfun.com/datasheets/IC/SN74HC595.pdf)
