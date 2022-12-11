@@ -44,7 +44,7 @@
 * 푸시 버튼   
     슬라이드 스위치가 없어 푸시 버튼으로 대체   
     버튼을 누르고 있는 중에만 켜지도록 함
-    
+
 - - -
 
 * LED
@@ -91,3 +91,8 @@
 * [마크다운 표 만들기](https://github.com/inasie/inasie.github.io/blob/master/_posts/2018-11-25-%EB%A7%88%ED%81%AC%EB%8B%A4%EC%9A%B4-%ED%91%9C-%EB%A7%8C%EB%93%A4%EA%B8%B0.md)
 * [마크다운 만들기](https://gist.github.com/ihoneymon/652be052a0727ad59601)
 * [마크다운 목차 만들기](https://kyeoneee.tistory.com/56)
+
+## 참고
+project_makefile 폴더는 파일들을 전부 쪼갠 것
+
+teamproject.c 파일은 project_makefile 폴더 내의 소스코드들을 한데 다 모아둔 것
