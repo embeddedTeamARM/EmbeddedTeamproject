@@ -1,19 +1,22 @@
 # EmbeddedTeamproject - Team ARM
 
 ## 사용한 모듈
-* RTC - I2C
+![i2c_rtc](https://user-images.githubusercontent.com/81803973/206887230-703a8d54-430a-4678-a00d-22256a7fae08.png)
+* RTC - I2C   
     + vcc - 3.3v
     + d - GPIO2(I2C data)
     + c - GPUO3(I2C clock)
     + gnd - gnd
     
-* 로터리 엔코더
+![rotaryencoder](https://user-images.githubusercontent.com/81803973/206887239-9f9d04d1-1494-41a8-a2a2-4edfd9077619.png)
+* 로터리 엔코더   
     + vcc - 3.3v
     + gnd - gnd
     + CLK - GPIO20(GPIO.input)
     + DT - GPIO21(GPIO.input)
     + SW - GPIO23(GPIO.input)
 
+![bluetooth](https://user-images.githubusercontent.com/81803973/206887241-3f8da0dc-67ec-4dc6-91cd-7ecf883745e5.png)
 * 블루투스 - UART   
     baud date : 115200bps
     + vcc - 5v
