@@ -133,11 +133,7 @@ void* thRoteryEncoder() { // 5v, clck gpio20, data gpio21
             clicker = 0;
         }
         if ((time(NULL) - rotery_time1) <= 5 || settingFlag == 1) {
-                pthread_mutex_lock(&m_currentBright);
-                pthread_mutex_lock(&m_brightChangeTime);
                 setFndData(clicker);
-                pthread_mutex_unlock(&m_brightChangeTime);
-                pthread_mutex_unlock(&m_currentBright);
         }
 
         lastStateCLK = currentStateCLK;
