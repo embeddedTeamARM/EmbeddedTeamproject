@@ -24,8 +24,8 @@
     + RXD - GPIO0(Raspberry.TXD2)
     + TXD - GPIO1(Raspberry.RXD2)
 
-* 버튼   
-    슬라이드 스위치가 없어 버튼으로 대체   
+* 푸시 버튼   
+    슬라이드 스위치가 없어 푸시 버튼으로 대체   
     버튼을 누르고 있는 중에만 켜지도록 함
 
 * LED
@@ -33,3 +33,9 @@
     + Bright Setting LED
         - 최대 밝기 인디케이터 - GPIO16(GPIO.output)
         - 설정 밝기 인디케이터 - GPIO19(GPIO.PWM_OUTPUT)
+
+## 참고 자료 출처
+* [74HC595 datasheet](https://www.sparkfun.com/datasheets/IC/SN74HC595.pdf)
+* [4 digit 7 segment with 74HC595](https://m.blog.naver.com/PostView.naver?isHttpsRedirect=true&blogId=pcmola&logNo=220610851580)
+* [rotary encoder click](https://learn.sunfounder.com/lesson-18-rotary-encoder/)
+* 금오공대 임베디드 시스템 강의 자료
