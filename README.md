@@ -1,5 +1,11 @@
 # EmbeddedTeamproject - Team ARM
 
+## 목차
+[1. 사용 모듈](#1-사용한-모듈)
+
+[2. 사용법](#2-사용법)
+
+[3. 참고자료](#참고-자료-출처)
 
 ## 1. 사용한 모듈
 ![i2c_rtc](https://user-images.githubusercontent.com/81803973/206887230-703a8d54-430a-4678-a00d-22256a7fae08.png)
@@ -71,3 +77,5 @@
 * [rotary encoder click](https://learn.sunfounder.com/lesson-18-rotary-encoder/)
 * 금오공대 임베디드 시스템 강의 자료
 * [마크다운 표 만들기](https://github.com/inasie/inasie.github.io/blob/master/_posts/2018-11-25-%EB%A7%88%ED%81%AC%EB%8B%A4%EC%9A%B4-%ED%91%9C-%EB%A7%8C%EB%93%A4%EA%B8%B0.md)
+* [마크다운 만들기](https://gist.github.com/ihoneymon/652be052a0727ad59601)
+* [마크다운 목차 만들기](https://kyeoneee.tistory.com/56)
