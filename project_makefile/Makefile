@@ -20,3 +20,4 @@ saveload.o: $(HEADER) saveload.c $(LIBS)
 clean:
 	rm -f $(TARGET)
 	rm -f *.o
+	rm -f *.ini

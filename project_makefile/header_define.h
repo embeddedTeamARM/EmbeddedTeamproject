@@ -27,6 +27,8 @@
 
 #define MAX_BRIGHT          100
 #define MIN_BRIGHT          10
+#define MAX_HOUR 24
+#define MAX_MIN 60
 
 #define SLAVE_ADDR_01 0x68 
 
@@ -48,6 +50,7 @@ extern time_t rotery_time1; // 세마포어 필요
 extern int rtc_fd, uart_fd;
 extern int isSettingEnd;
 extern int arg[6];
+extern time_t bright;
 
 #define ARR_SIZE (sizeof(brightChangeTime) / sizeof(int))
 #define CONVERT_BCD(x) (((x) / 10) << 4 | ((x) % 10))
