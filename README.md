@@ -41,13 +41,16 @@
 
 - - -
 
+### 4digit 7세그먼트 관리
+
+![4_digit_7_segment](https://user-images.githubusercontent.com/81803973/206914131-30608036-62bb-400b-887c-7fdbec62ef91.png)
 * 7 Segment
-    + digit4 - GPIO8
-    + digit3 - GPIO9
-    + digit2 - GPIO10
-    + digit1 - GPIO11
+    + digit4(D1) - GPIO8
+    + digit3(D2) - GPIO9
+    + digit2(D3) - GPIO10
+    + digit1(D4) - GPIO11
 
-
+![74hc595](https://user-images.githubusercontent.com/81803973/206914137-ec4febc1-3798-4df4-9778-46a995292ce8.png)
 * 74hc595
     + STCP(RCLK, 12) - GPIO5(시프트 레지스터가 수신한 데이터를 래치 레지스터에 저장하도록 해주는 신호선)
     + SHCP(SRCLK, 11) - GPIO6(라즈베리파이와 시프트 레지스터 간 클럭 동기화)
@@ -98,7 +101,9 @@
 
 ## 3. 참고 자료
 * [74HC595 datasheet](https://www.sparkfun.com/datasheets/IC/SN74HC595.pdf)
-* [4 digit 7 segment with 74HC595](https://m.blog.naver.com/PostView.naver?isHttpsRedirect=true&blogId=pcmola&logNo=220610851580)
+* [4 digit 7 segment with 74HC595](https://blog.naver.com/pcmola/220610851580)
+* [4 digit 7 segment image](http://www.learningaboutelectronics.com/Articles/4-digit-7-segment-LED-circuit-with-an-arduino.php)
+* [74HC595 image](https://blog.naver.com/dmaker123/221894002813)
 * [rotary encoder click](https://learn.sunfounder.com/lesson-18-rotary-encoder/)
 * 금오공대 임베디드 시스템 강의 자료
 * [마크다운 표 만들기](https://github.com/inasie/inasie.github.io/blob/master/_posts/2018-11-25-%EB%A7%88%ED%81%AC%EB%8B%A4%EC%9A%B4-%ED%91%9C-%EB%A7%8C%EB%93%A4%EA%B8%B0.md)
