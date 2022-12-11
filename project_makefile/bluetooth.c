@@ -53,7 +53,7 @@ void* thSettingWithBluetooth() {
             pthread_mutex_lock(&m_arg);
             pthread_mutex_lock(&m_currentBright);
             pthread_mutex_lock(&m_brightChangeTime);
-            printf("%d %d %d %d %d %d\n", arg[0], arg[1], arg[2], arg[3], arg[4], arg[5]);
+            // printf("%d %d %d %d %d %d\n", arg[0], arg[1], arg[2], arg[3], arg[4], arg[5]);
             // 블루투스 return값이 안옴
             // sprintf(ret_str, "return(origin) - start h:%2d m:%2d, end h:%2d m:%2d, bright:%3d", brightChangeTime[0], brightChangeTime[1], brightChangeTime[2], brightChangeTime[3], currentBright);
             // for (int i = 0; i < strlen(ret_str); i++) serialWrite(uart_fd, ret_str[i]);

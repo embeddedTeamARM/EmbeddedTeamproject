@@ -11,7 +11,7 @@
 
 [3. 참고자료](#3-참고-자료)
 
-## 1. 사용한 모듈
+## 1. 사용 모듈
 ![i2c_rtc](https://user-images.githubusercontent.com/81803973/206887230-703a8d54-430a-4678-a00d-22256a7fae08.png)
 * RTC - I2C   
     + vcc - 3.3v

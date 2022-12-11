@@ -26,7 +26,7 @@ void setting(int currentStateCLK) {
         }
         bright = time(NULL);
 
-        printf("mode:bright bright - %3d, start_time - %3d, %3d end_time - %3d, %3d\n", currentBright, brightChangeTime[0], brightChangeTime[1], brightChangeTime[2], brightChangeTime[3]);
+        // printf("mode:bright bright - %3d, start_time - %3d, %3d end_time - %3d, %3d\n", currentBright, brightChangeTime[0], brightChangeTime[1], brightChangeTime[2], brightChangeTime[3]);
         pthread_mutex_unlock(&m_currentBright);
     }
     else {
@@ -39,7 +39,7 @@ void setting(int currentStateCLK) {
         brightChangeTime[clicker-1] = brightChangeTime[clicker-1] % ((clicker-1)%2 == 0 ? MAX_HOUR : MAX_MIN);
         if (brightChangeTime[clicker-1] < 0) brightChangeTime[clicker-1] += ((clicker-1)%2 == 0 ? MAX_HOUR : MAX_MIN);
 
-        printf("mode:time%2s bright - %3d, start_time - %3d, %3d end_time - %3d, %3d\n", str[clicker-1], currentBright, brightChangeTime[0], brightChangeTime[1], brightChangeTime[2], brightChangeTime[3]);
+        // printf("mode:time%2s bright - %3d, start_time - %3d, %3d end_time - %3d, %3d\n", str[clicker-1], currentBright, brightChangeTime[0], brightChangeTime[1], brightChangeTime[2], brightChangeTime[3]);
         pthread_mutex_unlock(&m_brightChangeTime);
     }
 }
@@ -113,20 +113,31 @@ void* thRoteryEncoder() { // 5v, clck gpio20, data gpio21
         if (clickRotary() == TRUE)
         {
             clicker++;
+            settingFlag = 1;
             rotery_time1 = time(NULL);
             if (clicker == 5)
             {
+                clicker = 0;
                 rotery_time1 -= 10;
             }
+            printf("%d\n", clicker);
         }
 
         if ((time(NULL) - rotery_time1) > 5)
         {
             if (settingFlag == 1) {
                 settingFlag = 0;
+                clearFnd();
                 saveDatas();
             }
             clicker = 0;
+        }
+        if ((time(NULL) - rotery_time1) <= 5 || settingFlag == 1) {
+                pthread_mutex_lock(&m_currentBright);
+                pthread_mutex_lock(&m_brightChangeTime);
+                setFndData(clicker);
+                pthread_mutex_unlock(&m_brightChangeTime);
+                pthread_mutex_unlock(&m_currentBright);
         }
 
         lastStateCLK = currentStateCLK;

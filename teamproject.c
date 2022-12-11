@@ -14,6 +14,7 @@
 // gcc -o app teamproject.c -lwiringPi -lpthread
 
 #include <wiringPi.h>
+#include <wiringShift.h>
 #include <wiringSerial.h>
 #include <wiringPiI2C.h>
 #include <stdio.h>
@@ -31,7 +32,13 @@
 #define ROTERY_CLCK         20
 #define ROTERY_DATA         21
 #define ROTERY_CLICK        23
-#define LED_ON_BTN          0
+#define STCP                5
+#define SHCP                6
+#define DS                  7
+#define SEG_4               8
+#define SEG_3               9
+#define SEG_2               10
+#define SEG_1               11
 
 #define PWM_RANGE           100
 #define PWM_DIVISOR         960
@@ -92,6 +99,10 @@ unsigned char sevenseq[][8] = {
     ,{1, 1, 0, 1, 0, 1, 0, 1}   // n, minutes font issue    idx 14
 };
 
+unsigned char pos[4] = { SEG_4, SEG_3, SEG_2, SEG_1 };
+unsigned char digit[10] = {0x7E,0x30,0x6d,0x79,0x33,0x5b,0x5f,0x72,0x7f,0x7b}; // 0~9
+unsigned char character[] = {0x5b, 0x4f, 0x1f, 0x17, 0x15}; // S, E, b, h, n
+
 void saveDatas();
 
 int isInBrightChangeTime() {
@@ -114,8 +125,14 @@ int initGpio() {
     pinMode(LED_MAIN, PWM_OUTPUT);
     pinMode(ROTERY_CLCK, INPUT);
     pinMode(ROTERY_DATA, INPUT);
-    pinMode(LED_ON_BTN, INPUT);
     pinMode(ROTERY_CLICK, INPUT);
+    pinMode(DS, OUTPUT);
+    pinMode(SHCP, OUTPUT);
+    pinMode(STCP, OUTPUT);
+    pinMode(SEG_4, OUTPUT);
+    pinMode(SEG_3, OUTPUT);
+    pinMode(SEG_2, OUTPUT);
+    pinMode(SEG_1, OUTPUT);
     pullUpDnControl(ROTERY_CLICK, PUD_UP);
 
     pwmSetMode(PWM_MODE_MS);
@@ -185,7 +202,7 @@ void setting(int currentStateCLK) {
         }
         bright = time(NULL);
 
-        printf("mode:bright bright - %3d, start_time - %3d, %3d end_time - %3d, %3d\n", currentBright, brightChangeTime[0], brightChangeTime[1], brightChangeTime[2], brightChangeTime[3]);
+        // printf("mode:bright bright - %3d, start_time - %3d, %3d end_time - %3d, %3d\n", currentBright, brightChangeTime[0], brightChangeTime[1], brightChangeTime[2], brightChangeTime[3]);
         pthread_mutex_unlock(&m_currentBright);
     }
     else {
@@ -198,9 +215,75 @@ void setting(int currentStateCLK) {
         brightChangeTime[clicker-1] = brightChangeTime[clicker-1] % ((clicker-1)%2 == 0 ? MAX_HOUR : MAX_MIN);
         if (brightChangeTime[clicker-1] < 0) brightChangeTime[clicker-1] += ((clicker-1)%2 == 0 ? MAX_HOUR : MAX_MIN);
 
-        printf("mode:time%2s bright - %3d, start_time - %3d, %3d end_time - %3d, %3d\n", str[clicker-1], currentBright, brightChangeTime[0], brightChangeTime[1], brightChangeTime[2], brightChangeTime[3]);
+        // printf("mode:time%2s bright - %3d, start_time - %3d, %3d end_time - %3d, %3d\n", str[clicker-1], currentBright, brightChangeTime[0], brightChangeTime[1], brightChangeTime[2], brightChangeTime[3]);
         pthread_mutex_unlock(&m_brightChangeTime);
     }
+}
+
+void Latch() {
+    digitalWrite(STCP, HIGH);
+    digitalWrite(STCP, LOW);
+}
+
+void FND_out(unsigned char no) {
+    shiftOut(DS, SHCP, LSBFIRST, no);
+    Latch();
+    delay(1);
+} 
+
+void clearFnd() {
+    for (int i = 0; i < 4; i++) digitalWrite(pos[i], HIGH);
+}
+
+void turnOnFnd(unsigned char* data) {
+    int i;
+    for (i = 0; i < 4; i++) {
+        digitalWrite(pos[i], LOW);
+        FND_out(data[i]);
+        digitalWrite(pos[i], HIGH);
+    }
+}
+
+void setFndData(int clicker) {
+    unsigned char data[4];
+    int t = currentBright;
+    switch(clicker) {
+        case 0:
+            data[0] = character[2];
+            data[1] = digit[t/100]; t %= 100;
+            data[2] = digit[t/10];
+            data[3] = digit[t%10];
+            break;
+        case 1:
+            data[0] = character[0];
+            data[1] = character[3];
+            data[2] = digit[brightChangeTime[0]/10];
+            data[3] = digit[brightChangeTime[0]%10];
+            break;
+        case 2:
+            data[0] = character[0];
+            data[1] = character[4];
+            data[2] = digit[brightChangeTime[1]/10];
+            data[3] = digit[brightChangeTime[1]%10];
+            break;
+        case 3:
+            data[0] = character[1];
+            data[1] = character[3];
+            data[2] = digit[brightChangeTime[2]/10];
+            data[3] = digit[brightChangeTime[2]%10];
+            break;
+        case 4:
+            data[0] = character[1];
+            data[1] = character[4];
+            data[2] = digit[brightChangeTime[3]/10];
+            data[3] = digit[brightChangeTime[3]%10];
+            break;
+        default:
+            clearFnd();
+            break;
+    }
+
+    turnOnFnd(data);
 }
 
 void* thRoteryEncoder() { // 5v, clck gpio20, data gpio21
@@ -283,9 +366,17 @@ void* thRoteryEncoder() { // 5v, clck gpio20, data gpio21
         {
             if (settingFlag == 1) {
                 settingFlag = 0;
+                clearFnd();
                 saveDatas();
             }
             clicker = 0;
+        }
+        if ((time(NULL) - rotery_time1) <= 5 || settingFlag == 1) {
+                pthread_mutex_lock(&m_currentBright);
+                pthread_mutex_lock(&m_brightChangeTime);
+                setFndData(clicker);
+                pthread_mutex_unlock(&m_brightChangeTime);
+                pthread_mutex_unlock(&m_currentBright);
         }
 
         lastStateCLK = currentStateCLK;
@@ -345,7 +436,7 @@ void* thSettingWithBluetooth() {
             pthread_mutex_lock(&m_arg);
             pthread_mutex_lock(&m_currentBright);
             pthread_mutex_lock(&m_brightChangeTime);
-            printf("%d %d %d %d %d %d\n", arg[0], arg[1], arg[2], arg[3], arg[4], arg[5]);
+            // printf("%d %d %d %d %d %d\n", arg[0], arg[1], arg[2], arg[3], arg[4], arg[5]);
             // 블루투스 return값이 안옴
             // sprintf(ret_str, "return(origin) - start h:%2d m:%2d, end h:%2d m:%2d, bright:%3d", brightChangeTime[0], brightChangeTime[1], brightChangeTime[2], brightChangeTime[3], currentBright);
             // for (int i = 0; i < strlen(ret_str); i++) serialWrite(uart_fd, ret_str[i]);

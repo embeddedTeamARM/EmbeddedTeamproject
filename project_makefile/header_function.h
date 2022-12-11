@@ -25,4 +25,10 @@ void* thRtc();
 void loadDatas();
 void saveDatas();
 
+void Latch();
+void FND_out(unsigned char no);
+void clearFnd();
+void turnOnFnd(unsigned char* data);
+void setFndData(int clicker);
+
 #endif

@@ -3,6 +3,7 @@
 #define __TEAMPROJECT_DEFINE__
 
 #include <wiringPi.h>
+#include <wiringShift.h>
 #include <wiringSerial.h>
 #include <wiringPiI2C.h>
 #include <stdio.h>
@@ -20,7 +21,13 @@
 #define ROTERY_CLCK         20
 #define ROTERY_DATA         21
 #define ROTERY_CLICK        23
-#define LED_ON_BTN          0
+#define STCP                5
+#define SHCP                6
+#define DS                  7
+#define SEG_4               8
+#define SEG_3               9
+#define SEG_2               10
+#define SEG_1               11
 
 #define PWM_RANGE           100
 #define PWM_DIVISOR         960

@@ -9,8 +9,14 @@ int initGpio() {
     pinMode(LED_MAIN, PWM_OUTPUT);
     pinMode(ROTERY_CLCK, INPUT);
     pinMode(ROTERY_DATA, INPUT);
-    pinMode(LED_ON_BTN, INPUT);
     pinMode(ROTERY_CLICK, INPUT);
+    pinMode(DS, OUTPUT);
+    pinMode(SHCP, OUTPUT);
+    pinMode(STCP, OUTPUT);
+    pinMode(SEG_4, OUTPUT);
+    pinMode(SEG_3, OUTPUT);
+    pinMode(SEG_2, OUTPUT);
+    pinMode(SEG_1, OUTPUT);
     pullUpDnControl(ROTERY_CLICK, PUD_UP);
 
     pwmSetMode(PWM_MODE_MS);
