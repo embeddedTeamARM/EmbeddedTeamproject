@@ -5,11 +5,13 @@
 
 
 ## 목차
-[1. 사용 모듈](#1-사용-모듈)
+1. [사용 모듈](#1-사용-모듈)
 
-[2. 사용법](#2-사용법)
+2. [ 사용법](#2-사용법)
 
-[3. 참고자료](#3-참고-자료)
+3. [ 한계](#3-한계)
+
+4. [참고자료](#4-참고-자료)
 
 ## 1. 사용 모듈
 ![i2c_rtc](https://user-images.githubusercontent.com/81803973/206887230-703a8d54-430a-4678-a00d-22256a7fae08.png)
@@ -107,7 +109,13 @@
         |En|끝 분 indicater|2|
         |b|설정 밝기 indicater|3|
 
-## 3. 참고 자료
+
+## 3. 한계
+1. 아직 블루투스만을 지원한다. 모듈을 추가하고 데이터를 받는 부분을 wifi로도 받을 수 있게 한다면, wifi 통신도 가능할 것으로 생각한다.
+2. led의 밝기가 조절되는 것이 부자연스럽다. 현재 시각이 조명의 밝기를 어둡게 혹은 밝게 하는 시간대에 있다면(예를 들어 현재 밝기가 100이고 설정한 밝기가 20이라면 100에서 20까지 단계적으로 밝기가 줄어드는 것이 좋을것이다) 연속된 밝기로 조절이 될 것이라 생각하였다. 하지만 실제 구현해보니 mutex 등 여러 조건으로 인해 생각한 조절 방식이 구현되지 않았다.
+3. 블루투스 모듈에서 사용자의 휴대폰으로 데이터를 전송하지 못하는 것 같다.
+
+## 4. 참고 자료
 * [74HC595 datasheet](https://www.sparkfun.com/datasheets/IC/SN74HC595.pdf)
 * [4 digit 7 segment with 74HC595](https://blog.naver.com/pcmola/220610851580)
 * [4 digit 7 segment image](http://www.learningaboutelectronics.com/Articles/4-digit-7-segment-LED-circuit-with-an-arduino.php)
