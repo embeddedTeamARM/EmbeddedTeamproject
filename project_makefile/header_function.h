@@ -13,7 +13,7 @@ void initRTCTime();
 void* thRoteryEncoder();
 
 unsigned char serialRead(const int fd);
-void serialWrite(const int fd, const unsigned char c);
+void serialWrite(const int fd, const unsigned char* c);
 void* thBluetooth();
 
 void* thSettingWithBluetooth();

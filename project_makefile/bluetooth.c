@@ -8,8 +8,8 @@ unsigned char serialRead(const int fd) {
     return x; // 읽어온 데이터 반환
 }
 
-void serialWrite(const int fd, const unsigned char c) {
-    write(fd, &c, 1);
+void serialWrite(const int fd, const unsigned char* c) {
+    write(fd, &c, strlen(c));
 }
 
 void* thBluetooth() {
@@ -21,7 +21,10 @@ void* thBluetooth() {
 
         else {
             if (strlen(lines) > 0) {
-                lines[idx_l-2] = '\0';
+                if (lines[idx_l-1] == 0x0A || lines[idx_l-1] == 0x0D) lines[idx_l-2] = '\0';
+                else lines[idx_l] = '\0';
+
+                printf("%s\n", lines);
 
                 pthread_mutex_lock(&m_arg);
                 char* ptr = strtok(lines, " ");
@@ -44,6 +47,7 @@ void* thBluetooth() {
 
 void* thSettingWithBluetooth() {
     char ret_str[100];
+    char s_data[100];
     // 사용자가 정확한 값을 넣는다고 가정. 
     // 실제 앱은 시는 0~23, 분은 0~59까지 설정.
     // 밝기는 10 ~ 100까지의 값으로 설정
@@ -81,6 +85,9 @@ void* thSettingWithBluetooth() {
                     currentBright = arg[1];
                     break;
                 default:
+                    //HHMMHHMMBBB 형식으로 전송
+                    sprintf(s_data, "%02d%02d%02d%02d%03d", brightChangeTime[0], brightChangeTime[1], brightChangeTime[2], brightChangeTime[3], currentBright);
+                    serialWrite(uart_fd, s_data);
                     break;
             }
             // 블루투스 return값이 안옴

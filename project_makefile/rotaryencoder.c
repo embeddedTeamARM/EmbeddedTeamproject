@@ -19,10 +19,10 @@ void setting(int currentStateCLK) {
     if (clicker == 0) {
         pthread_mutex_lock(&m_currentBright);
         if (digitalRead(ROTERY_DATA) != currentStateCLK) {
-            if (currentBright < MAX_BRIGHT) ++currentBright;
+            if (currentBright < MAX_BRIGHT) currentBright += 5;
         }
         else {
-            if (currentBright > MIN_BRIGHT) --currentBright;
+            if (currentBright > MIN_BRIGHT) currentBright -= 5;
         }
         bright = time(NULL);
 
