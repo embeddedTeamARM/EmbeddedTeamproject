@@ -131,9 +131,5 @@
 - - -
 
 ## 비고
-1. project_makefile 폴더는 파일들을 전부 쪼갠 것   
+1. project_makefile 폴더는 파일들을 전부 쪼갠 것. 함수를 한군데에 모아두니 예상치 못한 버그 발생으로 기존의 c파일 제거   
 폴더 내부에서 make 하면 컴파일
-
-
-2. teamproject.c 파일은 project_makefile 폴더 내의 소스코드들을 한데 다 모아둔 것   
-gcc -o app teamproject.c -lwiringPi -lpthread 혹은 make 하면 컴파일
