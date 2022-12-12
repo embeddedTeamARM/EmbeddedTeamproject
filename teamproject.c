@@ -442,21 +442,25 @@ void* thSettingWithBluetooth() {
             // for (int i = 0; i < strlen(ret_str); i++) serialWrite(uart_fd, ret_str[i]);
             switch(arg[0]) {
                 case 1: // bright change start time setting
-                    brightChangeTime[0] = arg[1]; brightChangeTime[1] = arg[2];
+                    brightChangeTime[0] = arg[1] % 24; brightChangeTime[1] = arg[2] % 60;
                     break;
                 case 2: // bright change end time setting
-                    brightChangeTime[2] = arg[1]; brightChangeTime[3] = arg[2];
+                    brightChangeTime[2] = arg[1] % 24; brightChangeTime[3] = arg[2] % 60;
                     break;
                 case 3: // bright change start time ~ end time setting
-                    brightChangeTime[0] = arg[1]; brightChangeTime[1] = arg[2];
-                    brightChangeTime[2] = arg[3]; brightChangeTime[3] = arg[4];
+                    brightChangeTime[0] = arg[1] % 24; brightChangeTime[1] = arg[2] %60;
+                    brightChangeTime[2] = arg[3] % 24; brightChangeTime[3] = arg[4] %60;
                     break;
                 case 4: // bright change start time ~ end time and bright setting
-                    brightChangeTime[0] = arg[1]; brightChangeTime[1] = arg[2];
-                    brightChangeTime[2] = arg[3]; brightChangeTime[3] = arg[4];
+                    brightChangeTime[0] = arg[1] % 24; brightChangeTime[1] = arg[2] % 60;
+                    brightChangeTime[2] = arg[3] % 24; brightChangeTime[3] = arg[4] % 60;
+                    if (arg[5] < 10) arg[5] = 10;
+                    else if (arg[5] > 100) arg[5] = 100;
                     currentBright = arg[5];
                     break;
                 case 5: // bright setting
+                    if (arg[1] < 10) arg[1] = 10;
+                    else if (arg[1] > 100) arg[1] = 100;
                     currentBright = arg[1];
                     break;
                 default:
