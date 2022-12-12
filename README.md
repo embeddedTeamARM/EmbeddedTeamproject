@@ -129,7 +129,7 @@ Qb는 segment-A, Qc는 segment-B, ... , Qh는 segment-G에 연결하여 세그�
     1~5 이외의 값을 1.1에서 code 값으로 넘기면 데이터를 수신하는 모드로 설정된다.
     수신되는 값의 형식은 다음과 같다.
 
-    ```aabbccddeee```
+    <pre>aabbccddeee</pre>
 
     * aa : 시작 시각
     * bb : 시작 분
