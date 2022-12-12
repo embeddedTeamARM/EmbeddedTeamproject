@@ -12,6 +12,7 @@
 #include <unistd.h>
 #include <time.h>
 #include <pthread.h>
+#include <signal.h>
 
 #define CHAR_MAX 255
 
@@ -48,6 +49,8 @@ static const char* FILE_NAME = "config.ini";
 extern pthread_mutex_t m_roterySettingDelay, m_currentBright, m_savefile, m_brightChangeTime, m_currentTime;
 extern pthread_mutex_t m_arg, m_isSettingEnd;
 
+#define THREAD_NUM 5
+
 // default value : 00:00 ~ 06:00
 extern int brightChangeTime[4]; // 시, 분만 설정
 extern int currentBright;
@@ -58,6 +61,7 @@ extern int rtc_fd, uart_fd;
 extern int isSettingEnd;
 extern int arg[6];
 extern time_t bright;
+extern pthread_t threads[THREAD_NUM];
 
 #define ARR_SIZE (sizeof(brightChangeTime) / sizeof(int))
 #define CONVERT_BCD(x) (((x) / 10) << 4 | ((x) % 10))

@@ -23,6 +23,7 @@
 #include <unistd.h>
 #include <time.h>
 #include <pthread.h>
+#include <signal.h>
 
 #define CHAR_MAX 255
 
@@ -53,6 +54,8 @@
 #define MAX_HOUR 24
 #define MAX_MIN 60
 
+#define THREAD_NUM 5
+
 static const char* I2C_DEV = "/dev/i2c-1"; 
 static const char* UART2_DEV = "/dev/ttyAMA1";
 static const char* FILE_NAME = "config.ini";
@@ -78,6 +81,7 @@ pthread_mutex_t m_arg, m_isSettingEnd;
 
 int clicker = 0;
 time_t t;
+pthread_t threads[THREAD_NUM];
 
 static char* str[4] = {"sh\0", "sm\0", "eh\0", "em\0"};
 unsigned char s = 10, e = 11, h = 12, m = 13;
@@ -104,6 +108,7 @@ unsigned char digit[10] = {0x7E,0x30,0x6d,0x79,0x33,0x5b,0x5f,0x72,0x7f,0x7b}; /
 unsigned char character[] = {0x5b, 0x4f, 0x1f, 0x17, 0x15}; // S, E, b, h, n
 
 void saveDatas();
+void clearFnd();
 
 int isInBrightChangeTime() {
     if (brightChangeTime[0] > brightChangeTime[2]) {
@@ -179,6 +184,31 @@ int initUart() {
         return 1;
     }
     return 0;
+}
+
+void clearGpio() {
+    pwmWrite(LED_MAIN, LOW);
+    pwmWrite(LED_BRIGHT_COMP_MOD, LOW);
+    digitalWrite(LED_BRIGHT_COMP_ORI, LOW);
+    digitalWrite(DS, LOW);
+    digitalWrite(SHCP, LOW);
+    digitalWrite(STCP, LOW);
+}
+
+void sigintHandler(int sig) {
+    for (int i = 0; i < THREAD_NUM; i++) {
+        pthread_cancel(threads[i]);
+    }
+
+    saveDatas();
+    
+    clearFnd();
+    clearGpio();
+
+    close(rtc_fd);
+    close(uart_fd);
+
+    exit(0);
 }
 
 int clickRotary() {
@@ -582,15 +612,14 @@ void loadDatas() {
 }
 
 int main(int argc, char* argv[]) {
-
-    pthread_t threads[5];
-
     if (initGpio()) return 1;
     if (initI2C()) return 1;
     if (initUart()) return 1;
     initMutex();
     loadDatas();
-    initRTCTime(); // 현재 RTC 모듈의 배터리가 없어서 전원이 없으면 
+    initRTCTime(); // 현재 RTC 모듈의 배터리가 없어서 전원이 없으면 초기화됨
+
+    signal(SIGINT, sigintHandler);
 
     pthread_create(&threads[0], NULL, thRtc, NULL);
     pthread_create(&threads[1], NULL, thLed, NULL);

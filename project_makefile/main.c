@@ -16,7 +16,6 @@
 #include "header_define.h"
 #include "header_function.h"
 
-#define THREAD_NUM 5
 
 int brightChangeTime[4] = { 0, 0, 6, 0}; // 시, 분만 설정
 int currentBright;
@@ -26,12 +25,13 @@ time_t rotery_time1; // 세마포어 필요
 int rtc_fd, uart_fd;
 int isSettingEnd = 0;
 int arg[6] = {0, };
+pthread_t threads[THREAD_NUM];
 
 pthread_mutex_t m_roterySettingDelay, m_currentBright, m_savefile, m_brightChangeTime, m_currentTime;
 pthread_mutex_t m_arg, m_isSettingEnd;
 
+
 int main(int argc, char* argv[]) {
-    pthread_t threads[THREAD_NUM];
     void* functions[THREAD_NUM] = {thRtc, thLed, thRoteryEncoder, thBluetooth, thSettingWithBluetooth};
 
     if (initGpio()) return 1;
@@ -42,6 +42,8 @@ int main(int argc, char* argv[]) {
     // 현재 RTC 모듈의 배터리가 없어서 전원이 없으면 초기 시간으로 초기화됨
     // RTC 모듈의 배터리가 있다면 없어도 무방
     initRTCTime();
+
+    signal(SIGINT, sigintHandler);
 
     for (int i = 0; i < THREAD_NUM; i++) {
         pthread_create(&threads[i], NULL, functions[i], NULL);

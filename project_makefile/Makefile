@@ -1,5 +1,5 @@
 CC=gcc
-OBJS=main.o bluetooth.o init.o led.o rotaryencoder.o rtc.o saveload.o fnd.o
+OBJS=main.o bluetooth.o init.o led.o rotaryencoder.o rtc.o saveload.o fnd.o sigint.o
 HEADER=header_define.h header_function.h
 TARGET=app
 LIBS=-lwiringPi -lpthread
@@ -17,6 +17,7 @@ rotaryencoder.o: $(HEADER) rotaryencoder.c $(LIBS)
 rtc.o: $(HEADER) rtc.c $(LIBS)
 saveload.o: $(HEADER) saveload.c $(LIBS)
 fnd.o: $(HEADER) fnd.c $(LIBS)
+sigint.o: $(HEADER) sigint.c $(LIBS)
 
 clean:
 	rm -f $(TARGET)

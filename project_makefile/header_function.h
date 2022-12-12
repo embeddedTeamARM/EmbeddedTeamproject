@@ -31,4 +31,6 @@ void clearFnd();
 void turnOnFnd(unsigned char* data);
 void setFndData(int clicker);
 
+void sigintHandler(int signo);
+
 #endif
