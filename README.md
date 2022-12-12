@@ -29,7 +29,6 @@
     + c - GPUO3(I2C clock)
     + gnd - gnd
 
-- - -
 
 ![rotaryencoder](https://user-images.githubusercontent.com/81803973/206887239-9f9d04d1-1494-41a8-a2a2-4edfd9077619.png)
 * 로터리 엔코더   
@@ -39,7 +38,6 @@
     + DT - GPIO21(GPIO.input)
     + SW - GPIO23(GPIO.input)
 
-- - -
 
 ![bluetooth](https://user-images.githubusercontent.com/81803973/206887241-3f8da0dc-67ec-4dc6-91cd-7ecf883745e5.png)
 * 블루투스 - UART   
@@ -49,35 +47,41 @@
     + RXD - GPIO0(Raspberry.TXD2)
     + TXD - GPIO1(Raspberry.RXD2)
 
-- - -
 
 ### 4digit 7세그먼트 관리
 
 ![4_digit_7_segment](https://user-images.githubusercontent.com/81803973/206914131-30608036-62bb-400b-887c-7fdbec62ef91.png)
-* 7 Segment
-    + digit4(D1) - GPIO8
-    + digit3(D2) - GPIO9
-    + digit2(D3) - GPIO10
-    + digit1(D4) - GPIO11
+* 7 Segment : LOW일때 해당 FND에 값 출력
+    + digit4(D1) - GPIO8(GPIO.output)
+    + digit3(D2) - GPIO9(GPIO.output)
+    + digit2(D3) - GPIO10(GPIO.output)
+    + digit1(D4) - GPIO11(GPIO.output)
 
 ![74hc595](https://user-images.githubusercontent.com/81803973/206914137-ec4febc1-3798-4df4-9778-46a995292ce8.png)
 * 74hc595
-    + STCP(RCLK, 12) - GPIO5(시프트 레지스터가 수신한 데이터를 래치 레지스터에 저장하도록 해주는 신호선)
-    + SHCP(SRCLK, 11) - GPIO6(라즈베리파이와 시프트 레지스터 간 클럭 동기화)
-    + DS(SER, 14) - GPIO7(ic칩으로 데이터 전송)
-- - -
+    + STCP(RCLK, 12) - GPIO5(시프트 레지스터가 수신한 데이터를 래치 레지스터에 저장하도록 해주는 신호선, GPIO.output)
+    + SHCP(SRCLK, 11) - GPIO6(라즈베리파이와 시프트 레지스터 간 클럭 동기화, GPIO.output)
+    + DS(SER, 14) - GPIO7(ic칩으로 데이터 전송, GPIO.output)
+    
+
+현재 7segment에서 decimal(점 표현)은 필요 없음. 따라서 Qb ~ Qh까지 쓰는것으로 회로를 단순화   
+Qb는 segment-A, Qc는 segment-B, ... , Qh는 segment-G에 연결하여 세그먼트에 숫자를 출력
+
 
 * 푸시 버튼   
     슬라이드 스위치가 없어 푸시 버튼으로 대체   
     버튼을 누르고 있는 중에만 켜지도록 함
 
-- - -
+    추후에 슬라이드 스위치가 배송되면 슬라이드 스위치로 변경
+
 
 * LED
     + Main LED - GPIO18(GPIO.PWM_OUTPUT)
     + Bright Setting LED
         - 최대 밝기 인디케이터 - GPIO16(GPIO.output)
         - 설정 밝기 인디케이터 - GPIO19(GPIO.PWM_OUTPUT)
+
+- - -
 
 ## 2. 사용법
 1) 데이터 설정
@@ -117,11 +121,17 @@
         |En|끝 분 indicater|2|
         |b|설정 밝기 indicater|3|
 
+3) 슬라이드 스위치   
+    a. 슬라이드 스위치를 왼쪽으로 옮기면 불이 꺼진다.   
+    b. 슬라이드 스위치를 오른쪽으로 옮기면 불이 켜진다.
+- - -
 
 ## 3. 한계
 1. 아직 블루투스만을 지원한다. 모듈을 추가하고 데이터를 받는 부분을 wifi로도 받을 수 있게 한다면, wifi 통신도 가능할 것으로 생각한다.
 2. led의 밝기가 조절되는 것이 부자연스럽다. 현재 시각이 조명의 밝기를 어둡게 혹은 밝게 하는 시간대에 있다면(예를 들어 현재 밝기가 100이고 설정한 밝기가 20이라면 100에서 20까지 단계적으로 밝기가 줄어드는 것이 좋을것이다) 연속된 밝기로 조절이 될 것이라 생각하였다. 하지만 실제 구현해보니 mutex 등 여러 조건으로 인해 생각한 조절 방식이 구현되지 않았다.
 3. 블루투스 모듈에서 사용자의 휴대폰으로 데이터를 전송하지 못하는 것 같다.
+
+- - -
 
 ## 4. 참고 자료
 * 모듈 관련
