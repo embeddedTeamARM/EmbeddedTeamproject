@@ -108,7 +108,7 @@ Qb는 segment-A, Qc는 segment-B, ... , Qh는 segment-G에 연결하여 세그�
                 끝 시각 중 시각 설정
             case 5: 다이얼 4번 클릭
                 끝 시각 중 분 설정</pre>   
-           case 2~5일 경우, 시각 조절이 n초동안 일어나지 않는다면 default로 돌아간다.
+           case 2~5일 경우, 시각 조절이 n초동안 일어나지 않는다면 case1로 돌아간다.
 
            다이얼로 설정할 경우 7segment에 설정하려는 값이 나타난다.
 2) 7-segment   
@@ -120,6 +120,8 @@ Qb는 segment-A, Qc는 segment-B, ... , Qh는 segment-G에 연결하여 세그�
         |Eh|끝 시각 indicater|2|
         |En|끝 분 indicater|2|
         |b|설정 밝기 indicater|3|
+
+    로터리 엔코더의 값이 변경됨에 따라 FND의 LED가 점등된다.
 
 3) 슬라이드 스위치   
     a. 슬라이드 스위치를 왼쪽으로 옮기면 불이 꺼진다.   
