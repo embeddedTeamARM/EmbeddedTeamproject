@@ -54,7 +54,7 @@
 ## 2. 사용 모듈
 * Base
 
-
+    ![raspberry](https://user-images.githubusercontent.com/81803973/207356044-52c6c40e-fef7-4eb7-9811-61906ef4e110.png)
     - 라즈베리파이 4 model B
     
 * Module
