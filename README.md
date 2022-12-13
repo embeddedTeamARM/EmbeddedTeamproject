@@ -29,13 +29,65 @@
     배포한 스마트폰 앱을 통해 밝기를 조절하는 시간대와 밝기를 조절할 수 있는 제공할 수 있도록 한다.
 
 * 프로젝트 개요
-    1. 제한 요소   
+
+    1. 제한 요소
+
         `쓰레드/Mutex` 혹은 `멀티프로세싱/IPC` 를 필수로 사용한다.
 
     2. 전체 시스템 구조
 
-    3. 제한 요소 구현
 
+    3. 제한 요소 구현   
+
+        + 각 함수들은 pthread_create 함수를 이용하여 스레드로 동작하도록 한다. 
+            ```c
+            for (int i = 0; i < THREAD_NUM; i++) {
+                pthread_create(&threads[i], NULL, functions[i], NULL);
+            }
+
+            for (int i = 0; i < sizeof(threads) / sizeof(pthread_t); i++) {
+                pthread_join(threads[i], NULL);
+            }
+            ```
+        + 밝기 설정 및 밝기 조절 시간은 아래와 같이 mutex를 사용하여 상호 간섭이 일어나지 않게 한다.
+            ```c
+            if (clicker == 0) {
+                pthread_mutex_lock(&m_currentBright);
+                if (digitalRead(ROTERY_DATA) != currentStateCLK) {
+                    if (currentBright < MAX_BRIGHT) currentBright += 5;
+                }
+                else {
+                    if (currentBright > MIN_BRIGHT) currentBright -= 5;
+                }
+                pthread_mutex_unlock(&m_currentBright);
+            }
+            else {
+                pthread_mutex_lock(&m_brightChangeTime);
+                if (digitalRead(ROTERY_DATA) != currentStateCLK)
+                    ++brightChangeTime[clicker-1];
+                else
+                    --brightChangeTime[clicker-1];
+                pthread_mutex_unlock(&m_brightChangeTime);
+            }
+            ```
+        + 프로그램에 SIGINT(ctrl+c) 인터럽트가 발생할 경우, 모든 스레드를 강제중단시키고 GPIO_OUTPUT으로 설정한 핀의 값을 LOW 값으로 설정한다.
+            ```c
+            void sigintHandler(int sig) {
+                for (int i = 0; i < THREAD_NUM; i++) {
+                    pthread_cancel(threads[i]); // 스레드 종료
+                }
+                
+                clearFnd(); // 모든 fnd를 끔
+                clearGpio(); // GPIO_OUTPUT으로 설정한 핀의 값을 LOW 값으로 설정
+
+                close(rtc_fd); // rtc 디바이스 끄기
+                close(uart_fd); // uart(bluetooth) 디바이스 끄기
+
+                exit(0); // 프로그램 종료
+            }
+
+            signal(SIGINT, sigintHandler); // main function
+            ```
 
 - - -
 

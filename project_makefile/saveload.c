@@ -4,20 +4,24 @@
 void saveDatas() {
     // 데이터가 얼마 되지 않으므로 init 파일의 내용을 전부 지우고 진행
     int i;
+    char s_data[100];
     // a.=========== file 세마포어 =================
     pthread_mutex_lock(&m_savefile);
-    setting_fd = fopen(FILE_NAME, "w");
-    // b.=========== brightChangeTime 세마포어 ===============
     pthread_mutex_lock(&m_brightChangeTime);
-    for (i = 0; i < ARR_SIZE; i++) fprintf(setting_fd, "%d\n", brightChangeTime[i]);
-    pthread_mutex_unlock(&m_brightChangeTime);
-    // b.===================================================
-    // c.============ current bright 세마포어 ================
     pthread_mutex_lock(&m_currentBright);
+
+    setting_fd = fopen(FILE_NAME, "w");
+
+    for (i = 0; i < ARR_SIZE; i++) fprintf(setting_fd, "%d\n", brightChangeTime[i]);
     fprintf(setting_fd, "%d", currentBright);
-    pthread_mutex_unlock(&m_currentBright);
-    // c.===================================================
+
     fclose(setting_fd);
+
+    sprintf(s_data, "##%02d%02d%02d%02d%03d", brightChangeTime[0], brightChangeTime[1], brightChangeTime[2], brightChangeTime[3], currentBright);
+    serialWrite(uart_fd, s_data);
+    
+    pthread_mutex_unlock(&m_currentBright);
+    pthread_mutex_unlock(&m_brightChangeTime);
     pthread_mutex_unlock(&m_savefile);
     // a.=========================================
 }

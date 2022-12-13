@@ -85,8 +85,8 @@ void* thSettingWithBluetooth() {
                     currentBright = arg[1];
                     break;
                 default:
-                    //HHMMHHMMBBB 형식으로 전송
-                    sprintf(s_data, "%02d%02d%02d%02d%03d", brightChangeTime[0], brightChangeTime[1], brightChangeTime[2], brightChangeTime[3], currentBright);
+                    //##HHMMHHMMBBB 형식으로 전송
+                    sprintf(s_data, "##%02d%02d%02d%02d%03d", brightChangeTime[0], brightChangeTime[1], brightChangeTime[2], brightChangeTime[3], currentBright);
                     serialWrite(uart_fd, s_data);
                     break;
             }
