@@ -134,7 +134,7 @@ Qb는 segment-A, Qc는 segment-B, ... , Qh는 segment-G에 연결하여 세그�
 
     <pre>##aabbccddeee</pre>
 
-    * # : magic number. 가끔 휴대전화에서 데이터 수신 시 일부 데이터가 누락되는 문제 발생
+    * ```#``` : magic number. 가끔 휴대전화에서 데이터 수신 시 일부 데이터가 누락되는 문제 발생
     * aa : 시작 시각
     * bb : 시작 분
     * cc : 끝 시각
