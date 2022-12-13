@@ -132,8 +132,9 @@ Qb는 segment-A, Qc는 segment-B, ... , Qh는 segment-G에 연결하여 세그�
     1~5 이외의 값을 1.1에서 code 값으로 넘기면 데이터를 수신하는 모드로 설정된다.
     수신되는 값의 형식은 다음과 같다.
 
-    <pre>aabbccddeee</pre>
+    <pre>##aabbccddeee</pre>
 
+    * ```#``` : magic number. 가끔 휴대전화에서 데이터 수신 시 일부 데이터가 누락되는 문제 발생
     * aa : 시작 시각
     * bb : 시작 분
     * cc : 끝 시각
