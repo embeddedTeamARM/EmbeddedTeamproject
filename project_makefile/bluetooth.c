@@ -9,7 +9,7 @@ unsigned char serialRead(const int fd) {
 }
 
 void serialWrite(const int fd, const unsigned char* c) {
-    write(fd, &c, strlen(c));
+    write(fd, c, strlen(c));
 }
 
 void* thBluetooth() {
@@ -85,9 +85,11 @@ void* thSettingWithBluetooth() {
                     currentBright = arg[1];
                     break;
                 default:
-                    //##HHMMHHMMBBB 형식으로 전송
+                // 블루투스에서 값을 가져오면 무조건 saveData() 호출. saveData에서 serialWrite()를 부르도록 한다.
+/*                     //##HHMMHHMMBBB 형식으로 전송
                     sprintf(s_data, "##%02d%02d%02d%02d%03d", brightChangeTime[0], brightChangeTime[1], brightChangeTime[2], brightChangeTime[3], currentBright);
-                    serialWrite(uart_fd, s_data);
+                    printf("%s\n", s_data);
+                    serialWrite(uart_fd, s_data); */
                     break;
             }
             // 블루투스 return값이 안옴

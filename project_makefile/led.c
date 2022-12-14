@@ -24,16 +24,12 @@ void* thLed() {
         }
         pthread_mutex_unlock(&m_roterySettingDelay);
 
-        pthread_mutex_lock(&m_currentTime);
-        pthread_mutex_lock(&m_brightChangeTime);
         if (isInBrightChangeTime() == 1) {
             pwmWrite(LED_MAIN, currentBright);
         }
         else {
             pwmWrite(LED_MAIN, MAX_BRIGHT);
         }
-        pthread_mutex_unlock(&m_brightChangeTime);
-        pthread_mutex_unlock(&m_currentTime);
         delay(100);
     }
 }
