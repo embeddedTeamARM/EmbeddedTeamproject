@@ -117,6 +117,16 @@
 
             signal(SIGINT, sigintHandler); // main function
             ```
+    4. 데모 영상
+    
+        * 로터리 엔코더로 세팅값 설정
+            
+            https://user-images.githubusercontent.com/81803973/207559539-578579e7-bdfd-4479-b7dc-a57cf6d28c4a.mp4
+        
+        * 전용 앱을 이용하여 세팅값 설정
+           
+            https://user-images.githubusercontent.com/81803973/207559547-2ff3e1d4-4f25-489b-9bdf-ae175dc95e98.mp4
+
 
 - - -
 
