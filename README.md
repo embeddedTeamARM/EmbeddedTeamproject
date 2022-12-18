@@ -78,7 +78,7 @@
                 pthread_join(threads[i], NULL);
             }
             ```
-        + 밝기 설정 및 밝기 조절 시간은 아래와 같이 mutex를 사용하여 상호 간섭이 일어나지 않게 한다.
+        + 설정한 시간 내에서는 블루투스와 로터리 엔코더가 동시에 currentBright에 접근하여 값을 바꿀 수 있다. 때문에 밝기 설정 및 밝기 조절 시간은 mutex를 사용하여 두 모듈이 값을 변경함에 있어 상호 간섭이 일어나지 않도록 한다.    
             ```c
             if (clicker == 0) {
                 pthread_mutex_lock(&m_currentBright);
